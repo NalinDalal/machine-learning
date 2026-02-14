@@ -1,4 +1,4 @@
-# Chap 3- Classification
+# Classification
 
 let's start with hello-world of machine learning
 there is a popular data-set `MNIST`, whenever something new is found, tested on `MNIST`
@@ -68,8 +68,7 @@ y_train_5 = (y_train == 5) # True for all 5s, False for all other digits.
 y_test_5 = (y_test == 5)
 ```
 
-let's pick a classifier: `Stochastic
-Gradient Descent (SGD)`
+let's pick a classifier: `Stochastic Gradient Descent (SGD)`
 handles large datasets very efficiently
 
 ```python
@@ -468,4 +467,3 @@ essentially performing **multioutput regression/classification**.
 | **Multiclass**  | One of many classes                     | Digit 0–9                |
 | **Multilabel**  | Multiple binary labels per instance     | Detecting multiple faces |
 | **Multioutput** | Multiple multiclass labels per instance | Image denoising          |
-

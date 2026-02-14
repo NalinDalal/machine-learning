@@ -1,4 +1,3 @@
-
 # Training models
 
 well you saw the algorithm, trained them and wrote your own system without knowing th einternal

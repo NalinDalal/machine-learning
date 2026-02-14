@@ -8,10 +8,10 @@
 
 [chap-4](./chap-4.md)
 
-to start with chap 5
+[chap-5](./chap-5.md)
+
+to start with chap 6
 
 do like 1 day 1 chapter, 15 days are enough
-
-start revising from chapter 1
 
 refer [this](https://github.com/ageron/handson-ml3/blob/main/03_classification.ipynb) with book reading
