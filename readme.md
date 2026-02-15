@@ -10,7 +10,9 @@
 
 [chap-5](./chap-5.md)
 
-to start with chap 6
+[chap-6](./chap-6.md)
+
+to start with chap 7
 
 do like 1 day 1 chapter, 15 days are enough
 
