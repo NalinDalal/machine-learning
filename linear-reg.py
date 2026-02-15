@@ -10,6 +10,12 @@ gdp_per_capita = pd.read_csv("gdp_per_capita.csv", thousands=',', delimiter='\t'
 
 # --- Prepare the data ---
 def prepare_country_stats(oecd_bli, gdp_per_capita):
+    """
+
+    :param oecd_bli: param gdp_per_capita:
+    :param gdp_per_capita: 
+
+    """
     # Life satisfaction
     life_satisfaction = oecd_bli[oecd_bli["Indicator"] == "Life satisfaction"][["Country", "Value"]]
     life_satisfaction.rename(columns={"Value": "Life satisfaction"}, inplace=True)

@@ -15,6 +15,15 @@ y = 0.5 * X**2 + X + 2 + np.random.randn(m, 1)
 
 # Define a helper function to plot predictions
 def plot_model(model, X, y, label=None, color=None):
+    """
+
+    :param model: param X:
+    :param y: param label:  (Default value = None)
+    :param color: Default value = None)
+    :param X: param label:  (Default value = None)
+    :param label:  (Default value = None)
+
+    """
     X_new = np.linspace(-3, 3, 100).reshape(100, 1)
     y_new = model.predict(X_new)
     plt.plot(X_new, y_new, color=color, linewidth=2, label=label)

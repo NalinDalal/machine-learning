@@ -8,6 +8,12 @@ HOUSING_URL = DOWNLOAD_ROOT + HOUSING_PATH + "/housing.tgz"
 
 #download and load data into directory
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
+    """
+
+    :param housing_url: Default value = HOUSING_URL)
+    :param housing_path: Default value = HOUSING_PATH)
+
+    """
     if not os. path.isdir (housing_path):
         os. makedirs(housing_path)
     tgz_path = os.path.join(housing_path, "housing.tgz")
@@ -18,6 +24,11 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
 
 #load housing data; returns a Pandas DataFrame object containing all the data.
 def load_housing_data(housing_path=HOUSING_PATH):
+    """
+
+    :param housing_path: Default value = HOUSING_PATH)
+
+    """
     csv_path=os.path.join(housing_path,'housing.csv')
     return pd.read_csv(csv_path)
 

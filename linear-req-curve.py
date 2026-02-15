@@ -3,6 +3,13 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
 def plot_learning_curves(model, X, y):
+    """
+
+    :param model: param X:
+    :param y: param X:
+    :param X: 
+
+    """
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
     train_errors, val_errors = [], []
 

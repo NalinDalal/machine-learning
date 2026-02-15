@@ -10,6 +10,11 @@ HOUSING_URL = DOWNLOAD_ROOT + HOUSING_PATH + "/housing.tgz"
 
 # --- Load housing data from local CSV ---
 def load_housing_data(housing_path=HOUSING_PATH):
+    """
+
+    :param housing_path: Default value = HOUSING_PATH)
+
+    """
     csv_path = os.path.join(housing_path, "housing.csv")
     return pd.read_csv(csv_path)
 
@@ -17,6 +22,12 @@ housing = load_housing_data()
 
 # ---- Split dataset into training and test sets ----
 def split_train_test(data, test_ratio):
+    """
+
+    :param data: param test_ratio:
+    :param test_ratio: 
+
+    """
     shuffled_indices = np.random.permutation(len(data))
     test_set_size = int(len(data) * test_ratio)
     test_indices = shuffled_indices[:test_set_size]

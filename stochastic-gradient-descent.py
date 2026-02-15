@@ -1,6 +1,11 @@
 n_epochs = 50
 t0, t1 = 5, 50 # learning schedule hyperparameters
 def learning_schedule(t):
+    """
+
+    :param t: 
+
+    """
     return t0 / (t + t1)
 
 theta = np.random.randn(2,1) # random initialization
