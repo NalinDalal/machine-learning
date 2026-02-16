@@ -12,8 +12,8 @@
 
 [chap-6](./chap-6.md)
 
-to start with chap 7
+[chap-7](./chap-7.md)
+
+to start with chap 8
 
 do like 1 day 1 chapter, 15 days are enough
-
-refer [this](https://github.com/ageron/handson-ml3/blob/main/03_classification.ipynb) with book reading
