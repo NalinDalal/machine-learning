@@ -18,4 +18,12 @@
 
 to start with chap 9
 
-do like 1 day 1 chapter, 15 days are enough
+do like 1 day 1 chapter, 16 days are enough
+
+---
+
+**Projects:**
+
+- Predictive model for stock price forecasting
+- Customer segmentation analysis
+- Complete Kaggle Titanic competition
