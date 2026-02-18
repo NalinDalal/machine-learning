@@ -16,11 +16,10 @@
 
 [chap-8](./chap-8.md)
 
-to start with chap 9
-
-do like 1 day 1 chapter, 16 days are enough
+[chap-9](./chap-9.md)
 
 ---
+chap 10 to chap 16(1 day 1 chap)
 
 **Projects:**
 
