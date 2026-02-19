@@ -18,8 +18,10 @@
 
 [chap-9](./chap-9.md)
 
+[chap-10](./chap-10.md)
+
 ---
-chap 10 to chap 16(1 day 1 chap)
+chap 11 to chap 16(1 day 1 chap)
 
 **Projects:**
 
