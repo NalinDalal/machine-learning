@@ -21,6 +21,9 @@
 [chap-10](./chap-10.md)
 
 [chap-11](./chap-11.md)
+
+[chap-12](./chap-12.md)
+
 ---
 chap 12 to chap 16(1 day 1 chap)
 
