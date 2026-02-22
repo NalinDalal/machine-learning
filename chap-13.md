@@ -5,7 +5,7 @@ stimuli located in a limited region of the visual field
 
 some neurons respond only to horizontal, some only to vertical
 
-## Convolution Layer
+## [Convolution Layer](./cnn-convolution.py)
 neurons in the first convolutional layer are not connected to every single pixel in the input image, but only to pixels in their receptive fields 
 
 A neuron located in row i, column j of a given layer is connected to the outputs of the
@@ -66,7 +66,7 @@ plt.imshow(output[0, :, :, 1]) # plot 1st image's 2nd feature map
 plt.show()
 ```
 
-## Pooling Layer
+## [Pooling Layer](./cnn-pooling.py)
 subsample (i.e., shrink) the input image in order to reduce the computational load, the memory usage, and the number of parameters
 
 each neuron in a pooling layer is connected to the
@@ -97,7 +97,7 @@ images gets smaller at each step
 3 main architectures:
 
 
-**LeNet-5 Architecture(1998):**
+**[LeNet-5 Architecture(1998):](./le-net5.py)**
 
 | Layer | Type | Maps | Size | Kernel | Stride | Activation |
 |-------|------|------|------|--------|--------|------------|
@@ -110,7 +110,7 @@ images gets smaller at each step
 | F6 | Fully Connected | – | 84 | – | – | tanh |
 | Out | Fully Connected | – | 10 | – | – | RBF |
 
-**AlexNet Architecture:**
+**[AlexNet Architecture:](./alex-net.py)**
 
 | Layer | Type | Maps | Size | Kernel | Stride | Padding | Activation |
 |-------|------|------|------|--------|--------|---------|------------|
@@ -145,7 +145,7 @@ ZF Net (2013 winner) — essentially AlexNet with tweaked hyperparameters (featu
 
 ---
 
-### GoogLeNet (2014)
+### [GoogLeNet (2014)](./google-net.py)
 
 won ILSVRC 2014, top-5 error rate below 7%
 much deeper than previous CNNs but 10× fewer parameters than AlexNet (~6M vs ~60M)
@@ -180,7 +180,7 @@ original also had 2 auxiliary classifiers (at 3rd and 6th inception module) — 
 
 ---
 
-### ResNet (2015)
+### [ResNet (2015)](./res-net.py)
 
 won ILSVRC 2015, top-5 error rate under 3.6%, 152 layers deep
 
@@ -215,3 +215,7 @@ won ILSVRC 2015, top-5 error rate under 3.6%, 152 layers deep
 other notable architectures:
 - **VGGNet** (2014 runner-up) — simple but deep (16-19 layers, all 3×3 convs)
 - **Inception-v4** — merges GoogLeNet + ResNet ideas, ~3% top-5 error
+
+----
+
+[using them all](./cnn-final.py)
