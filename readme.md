@@ -28,14 +28,4 @@
 
 [chap-15](./chap-15.md)
 
-
----
-
-chap 16(1 day 1 chap)
-459-490
-
-**Projects:**
-
-- Predictive model for stock price forecasting, [acm paper-ml model](https://dl.acm.org/doi/fullHtml/10.1145/3674029.3674037?__cf_chl_tk=tHka1sNAHmDYuh8Wq1.5i3P_kang9J.51.XPiNTliTs-1771762124-1.0.1.1-obUQuTBH.KzS.OppxEKbbHt6mjPK3ITaddrWUtbqgnA), [transformer-model](https://dl.acm.org/doi/epdf/10.1145/3674029.3674037)
-- [Complete Kaggle Titanic competition](https://www.kaggle.com/competitions/titanic/overview)
-
+[chap 16](./chap-16.md)
