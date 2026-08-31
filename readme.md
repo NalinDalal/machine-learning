@@ -1,31 +1,24 @@
-# Machine Learning
 
-[chap-1-2](./chap-1-2.md)
+Supervised Learning: Linear regression, logistic regression, decision trees
 
-[chap-3](./chap-3.md)
 
-[chap-4](./chap-4.md)
+it all started with one person who was trying to find patterns, hence the 1st concept itself is
+- [Galton (1886) — Family Likeness in Stature](https://galton.org/essays/1880-1889/galton-1886-family-likeness-stature.pdf) — origin of the word "regression"
 
-[chap-5](./chap-5.md)
+- [**linear regression**](./linear-reg.md)
 
-[chap-6](./chap-6.md)
+then we gone through some [statistcs](./statistics.md)
 
-[chap-7](./chap-7.md)
+after reading some staticstics we started with [decision tree](./decision-tree.md)
+[Quinlan (1986) — Induction of Decision Trees](https://hunch.net/~coms-4771/quinlan.pdf)
 
-[chap-8](./chap-8.md)
+then we started with notes of andrew ng,
+we read about [Generalized Linear Models](./generalized-linear-model.md)
 
-[chap-9](./chap-9.md)
+[Deep Learning](./deep-learning.md)
 
-[chap-10](./chap-10.md)
+[Generalisation & Regularisation](./gnrl-reg.md)
 
-[chap-11](./chap-11.md)
+[unsupervised](unsupervised.md)
 
-[chap-12](./chap-12.md)
-
-[chap-13](./chap-13.md)
-
-[chap-14](./chap-14.md)
-
-[chap-15](./chap-15.md)
-
-[chap 16](./chap-16.md)
+[reinforcement](reinforcement.md)
