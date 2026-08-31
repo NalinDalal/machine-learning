@@ -138,9 +138,7 @@ precision is typically used along with another metric named recall, also called 
 (TPR): this is the ratio of positive instances that are correctly detected by the classifier
 
 $$
-[
 \text{recall}=\frac{TP}{TP+FN}
-]
 $$
 
 other way to do it in python
@@ -154,15 +152,11 @@ recall_score(y_train_5, y_train_pred)
 combine both into single unit `F1`
 
 $$
-[
 \text{F1}=2*\frac{precision*recall}{precision+recall}
-]
 $$
 
 $$
-[
 \text{F1}=\frac{TP}{TP+ \frac{FN+FP}{2} }
-]
 $$
 
 ```python
@@ -185,11 +179,11 @@ precision_score(y_train_5, y_pred)
 recall_score(y_train_5, y_train_pred)
 ```
 
-```
+$$
 \text{F1}=\frac{2}{\frac{1}{precision}+\frac{1}{recall}}
 \text{F1}=2*\frac{precision*recall}{precision+recall}
 \text{F1}=\frc{TP}{TP+\frac{FN+FP}{2}}
-```
+$$
 
 to calculate F1 score do this:
 
@@ -198,7 +192,7 @@ from sklearn.metrics import f1_score
 f1_score(y_train_5, y_pred)
 ```
 
-unfortunately u can't have both: increasing precision reduces recall, and vice versa.
+unfortunately u can't have both: increasing precision reduces recall, and vice versa.<br>
 known as _precision/recall tradeoff_.
 
 ### Precision/Recall Tradeoff
@@ -209,9 +203,9 @@ By default, classifiers like `SGDClassifier` assign an instance to the _positive
 ### What Happens When You Adjust the Threshold
 
 - **Raising the threshold** → fewer positive predictions
-  → Higher **precision**, but lower **recall**
+<br>  → Higher **precision**, but lower **recall**
 - **Lowering the threshold** → more positive predictions
-  → Higher **recall**, but lower **precision**
+ <br> → Higher **recall**, but lower **precision**
 
 Example:
 
@@ -283,9 +277,7 @@ similar to precision/recall curve but plots `true positive rate (another name fo
 `FPR` is the ratio of negative instances that are incorrectly classified as positive
 
 $$
-[
     fpr=1-tnr
-]
 $$
 
 tnr(or specificity) is ratio of negative instances that are correctly classified as negative.
@@ -308,6 +300,7 @@ def plot_roc_curve(fpr, tpr, label=None):
     plt.axis([0, 1, 0, 1])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
+
 plot_roc_curve(fpr, tpr)
 plt.show()
 ```
@@ -352,18 +345,19 @@ Creates **one binary classifier per class**.
 Each classifier decides “is this class or not?”
 The class with the **highest confidence score** wins.
 
-#### One-vs-One (OvO)
-
-Creates a **binary classifier for every pair of classes**.
-For `n` classes → `n × (n − 1) / 2` classifiers.
-Each classifier votes → the class with the **most votes** is predicted.
-
 ```python
 from sklearn.multiclass import OneVsOneClassifier
 ovo_clf = OneVsOneClassifier(SGDClassifier(random_state=42))
 ovo_clf.fit(X_train, y_train)
 len(ovo_clf.estimators_)  # 45 classifiers for 10 digits
 ```
+
+#### One-vs-One (OvO)
+
+Creates a **binary classifier for every pair of classes**.
+For `n` classes → `n × (n − 1) / 2` classifiers.
+Each classifier votes → the class with the **most votes** is predicted.
+
 
 `RandomForestClassifier` can handle multiclass directly:
 
