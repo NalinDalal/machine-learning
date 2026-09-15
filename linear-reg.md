@@ -1,12 +1,11 @@
 # [Linear Regression](https://galton.org/essays/1880-1889/galton-1886-family-likeness-stature.pdf)
 
-read the 1st paper , well here is summary of what i read, understood and learnt
+The 1st paper that started it all, here is summary of what i read, understood and learnt:
 
-well Francis Galton wanted to quantify how physical traits (like height) are inherited.
+Our hero Francis Galton wanted to quantify how physical traits (like height) are inherited.
 Not just “tall parents → tall kids,” but how much tallness carries over statistically.
 
-he was obessed with the idea,
-He chose stature (height) because:
+He was obessed with the idea, he chose stature (height) because:
 
 - It’s measurable with high precision,
 - It’s stable in adults,
@@ -20,12 +19,12 @@ He collected data as:
 - Heights of 783 brothers across 295 families.
 - Converted all female heights to “male equivalents” (×1.08 multiplier) so the whole dataset could be treated uniformly.
 
-He plotted distributions of height as ogives — basically cumulative curves of how many people are below a given height.
+He plotted distributions of height as ogives(basically cumulative curves of how many people are below a given height).
 
 He then defined:
 
 - Mean: average stature in population.
-- Quartile Deviation (p): half the difference between upper and lower quartiles — a measure of spread (like SD but for quartiles).
+- Quartile Deviation (p): half the difference between upper and lower quartiles.It's a measure of spread (like SD but for quartiles).
 
 ## Heart of Paper
 
@@ -110,7 +109,7 @@ So every modern regression equation(even ML linear regression) descends conceptu
 
 ---
 
-##  6. The Appendix (by J.D. Hamilton Dickson)
+## 6. The Appendix (by J.D. Hamilton Dickson)
 
 This part extends Galton’s intuition into **geometry**:
 
@@ -133,8 +132,7 @@ Galton’s work was genius, but also primitive in some ways:
 
 Still, the math itself was clean and sound hence _the concept survived_.
 
-a mere implementation of same is [here](./linear-reg-galton.py)
+a mere implementation of same is [here](./linearRegGalton.py)
 
 same thing generates the below given image:
 ![img](./Galton_Figure.jpg)
-
