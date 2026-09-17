@@ -1,6 +1,8 @@
 # [Decision Trees: Quinlan (1986)](https://hunch.net/~coms-4771/quinlan.pdf)
 
-It began as an attempt to formalize reasoning — how can a machine learn a rule that maps observed features to outcomes? In the mid-1980s, knowledge-based expert systems required hundreds or thousands of rules, but elucidating them through manual interviews proceeded at a rate of mere rules per person-day. This "bottleneck problem" motivated the search for automated knowledge acquisition through inductive learning from examples.
+It began as an attempt to formalize reasoning : how can a machine learn a rule that maps observed features to outcomes?
+You can do knowledge-based experts based on 10k rules. But that would simply take whole day. Too manual and lengthy: BottleNeck.
+This "bottleneck problem" motivated the search for automated knowledge acquisition through inductive learning from examples.
 
 ---
 
@@ -18,7 +20,7 @@ The methodology addressed classification tasks where objects belong to one of se
 
 # 2. Core Idea
 
-A decision tree is a recursive partitioning structure that assigns objects to classes based on attribute values. The representation is deliberately simple — lacking the expressive power of semantic networks or first-order logic — but sufficient for solving difficult practical problems.
+A decision tree is a recursive partitioning structure that assigns objects to classes based on attribute values. The representation is deliberately simple, lacking the expressive power of semantic networks or first-order logic but sufficient for solving difficult practical problems.
 
 > Each internal node tests an attribute  
 > Each branch represents a possible outcome  
@@ -33,7 +35,7 @@ Objects are described through a collection of attributes, each taking values fro
 - `humidity`: {high, normal}
 - `windy`: {true, false}
 
-The induction task: given a training set of objects with known classes, develop a classification rule that generalizes to unseen objects. This requires that attributes be **adequate** — the training set contains no two objects with identical attribute values but different classes.
+The induction task: given a training set of objects with known classes, develop a classification rule that generalizes to unseen objects. This requires that attributes be **adequate** ( the training set contains no two objects with identical attribute values but different classes).
 
 Consider a training set of 14 Saturday mornings classified as suitable (Y) or unsuitable (N) for some activity. A decision tree testing `outlook` first, then `humidity` and `windy` as needed, captures the classification structure:
 
@@ -65,6 +67,7 @@ $$
 This measure derives from Shannon's information theory. It quantifies the expected information content of the message identifying an object's class, assuming classes appear in proportion to their frequency in $C$.
 
 Properties:
+
 - $I(p, n) = 0$ when all objects belong to one class (no uncertainty)
 - $I(p, n)$ is maximal when $p = n$ (maximum uncertainty)
 - Measured in bits (logarithm base 2)
@@ -128,10 +131,12 @@ This windowing approach often finds correct trees faster than processing the ent
 Given collection $C$:
 
 **Base cases:**
+
 - If $C$ is empty or contains only one class: create a leaf labeled with that class
 - If all attributes exhausted: create a leaf labeled with the majority class in $C$
 
 **Recursive case:**
+
 1. Evaluate $\text{gain}(A)$ for each untested attribute $A$
 2. Select $A^* = \arg\max_A \text{gain}(A)$
 3. Create node testing $A^*$ with branches for each value $\{A_1, \ldots, A_v\}$
@@ -149,10 +154,12 @@ Total complexity per iteration: $O(|C| \cdot |A| \cdot |N|)$ where $|N|$ is the 
 ## Empirical Performance
 
 **Chess endgame domain (715 distinct positions, 49 binary attributes):**
+
 - Training on 20% random sample → 84% accuracy on unseen objects
 - Correct tree contains ≈150 nodes (complex domain)
 
 **Simplified domain (1,987 objects, 48-node correct tree):**
+
 - Training on 20% random sample → 98% accuracy on unseen objects
 
 These results demonstrate that induced trees capture genuine relationships rather than memorizing random patterns. The preference for simpler trees follows Occam's Razor and is supported by theoretical analysis: Pearl (1978) and Quinlan (1983) derived upper bounds on expected error showing that bounds increase with generalization complexity for fixed training set size.
@@ -205,7 +212,7 @@ Study on 551-object, 39-attribute chess domain. Noise level $m$% means each valu
 **Results (averaged over 20 runs):**
 
 | Noise Level | Single Attribute | All Attributes | Class Info |
-|-------------|------------------|----------------|------------|
+| ----------- | ---------------- | -------------- | ---------- |
 | 5%          | 1.3%             | 11.9%          | 2.6%       |
 | 10%         | 2.5%             | 18.9%          | 5.5%       |
 | 20%         | 4.6%             | 27.8%          | 9.9%       |
@@ -256,11 +263,11 @@ where $p_i$ counts objects with value $A_i$ and class P among those with known $
 
 **Empirical comparison (551-object task, single unknown value):**
 
-| Method               | Attr 1 | Attr 2 | Attr 3 |
-|----------------------|--------|--------|--------|
-| Bayesian             | 28%    | 27%    | 38%    |
-| Decision tree        | 19%    | 22%    | 19%    |
-| Most common value    | 28%    | 27%    | 40%    |
+| Method            | Attr 1 | Attr 2 | Attr 3 |
+| ----------------- | ------ | ------ | ------ |
+| Bayesian          | 28%    | 27%    | 38%    |
+| Decision tree     | 19%    | 22%    | 19%    |
+| Most common value | 28%    | 27%    | 40%    |
 
 Error rates (proportion of incorrect replacements) remain disappointingly high. The decision-tree method uses more context and performs better, but none are reliable.
 
@@ -315,7 +322,7 @@ Performance is substantially better when a correct tree classifies objects with 
 
 ## Bias Toward Many-Valued Attributes
 
-The gain criterion exhibits systematic bias favoring attributes with many values. 
+The gain criterion exhibits systematic bias favoring attributes with many values.
 
 **Analysis:** Let $A'$ be formed from $A$ by splitting one value into two. It can be proven:
 
@@ -334,16 +341,19 @@ Bratko's group encountered medical tasks where "age of patient" (nine ranges) wa
 Restrict all tests to binary outcomes. For attribute $A$ with values $\{A_1, \ldots, A_v\}$:
 
 Instead of $v$-way branching, choose a subset $S \subseteq \{A_1, \ldots, A_v\}$ and create two branches:
+
 - One for values in $S$
 - One for values not in $S$
 
 Compute gain as if all values in $S$ were amalgamated into one value and remaining values into another. The test selected maximizes gain over all attributes and all non-trivial subsets.
 
 **Advantages:**
+
 - Eliminates bias toward many-valued attributes
 - Produces smaller trees with improved classification performance
 
 **Disadvantages:**
+
 - Reduced intelligibility (unrelated values grouped together, multiple tests on same attribute)
 - Computational cost: For $v$ values, there are $2^{v-1} - 1$ non-trivial subsets to evaluate (removing symmetric and trivial cases). For $v = 20$, this becomes infeasible.
 
@@ -396,13 +406,16 @@ $$
 Experiments (Quinlan 1985b) on multiple domains:
 
 **Binary attributes only:**
+
 - Gain ratio produces smaller trees (551-object task: 143 nodes vs. 175 nodes for gain criterion)
 
 **Many-valued attributes present:**
+
 - Subset criterion gives smallest trees and best predictive accuracy
 - But requires much more computation
 
 **Many-valued with redundant attributes** (same information at coarser granularity):
+
 - Gain ratio gives highest predictive accuracy
 - Redundant attributes prevent excessive fragmentation that subset criterion would create
 
@@ -419,10 +432,12 @@ $$
 Select the attribute with highest confidence for rejecting independence (highest $\chi^2$ value for its degrees of freedom).
 
 **Advantages:**
+
 - Explicitly accounts for number of values ($v-1$ degrees of freedom)
 - May avoid bias naturally
 
 **Limitations:**
+
 - Chi-square test requires expected values $p'_i, n'_i > 4$ (ideally)
 - Fails for small collections $C$ or rare attribute values
 - No empirical results available yet
@@ -434,6 +449,7 @@ Select the attribute with highest confidence for rejecting independence (highest
 The TDIDT methodology demonstrated that inductive learning from examples could produce practical classification rules. Current commercial systems achieved noteworthy industrial successes (Westinghouse reported revenue increases exceeding $10M annually from fuel-enrichment applications).
 
 The theoretical foundation proved robust:
+
 - Graceful degradation under noise (5% attribute noise → 12% error increase)
 - Handling of unknown values without catastrophic failure
 - Computational tractability scaling to 30,000 objects and 50 attributes

@@ -2,7 +2,7 @@
 
 This note summarizes how linear regression, logistic regression, and their cousins fit into the unified framework of Generalized Linear Models (GLMs).
 
-## Setup — quick recap
+## Setup
 
 - Regression: $y\mid x;\theta\sim\mathcal{N}(\mu,\sigma^2)$.
 - Binary classification: $y\mid x;\theta\sim\text{Bernoulli}(\phi)$.
@@ -12,9 +12,10 @@ In both cases the mean/parameter ($\mu$ or $\phi$) is a function of $x$ and $\th
 ## Exponential family
 
 A distribution belongs to the exponential family if it can be written as
-$$
-p(y;\eta)=b(y)\exp\big(\eta^T T(y)-a(\eta)\big),
-$$
+<br>
+$p(y;\eta)=b(y)\exp\big(\eta^T T(y)-a(\eta)\big)$
+<br>
+
 where $\eta$ is the natural (canonical) parameter, $T(y)$ is the sufficient statistic, $a(\eta)$ is the log-partition function, and $b(y)$ is the base measure.
 
 Examples:
@@ -35,41 +36,38 @@ These assumptions give a simple mapping from inputs $x$ to the expected response
 ## Recovering familiar models
 
 Linear regression (OLS): assume Gaussian noise. The canonical link is identity, so
-$$
-h_\theta(x)=\mathbb{E}[y\mid x]=\eta=\theta^T x.
-$$
+
+$h_\theta(x)=\mathbb{E}[y\mid x]=\eta=\theta^T x$.
 
 Logistic regression: assume Bernoulli outcomes. The canonical response is the sigmoid,
-$$
-h_\theta(x)=\mathbb{E}[y\mid x]=\sigma(\eta)=\frac{1}{1+e^{-\eta}}=\frac{1}{1+e^{-\theta^T x}}.
-$$
+
+$h_\theta(x)=\mathbb{E}[y\mid x]=\sigma(\eta)=\frac{1}{1+e^{-\eta}}=\frac{1}{1+e^{-\theta^T x}}.$
 
 Softmax / multinomial (multiclass): for $k$ classes with parameters $\theta_1,\dots,\theta_k$,
-$$
-p(y=i\mid x)=\frac{e^{\theta_i^T x}}{\sum_{j=1}^k e^{\theta_j^T x}},
-$$
+
+$p(y=i\mid x)=\frac{e^{\theta_i^T x}}{\sum_{j=1}^k e^{\theta_j^T x}}$ ,
+
 which generalizes the sigmoid to multiple classes.
 
 Loss (negative log-likelihood) for softmax:
-$$
-\ell(\theta)=-\sum_{i=1}^n\log\frac{e^{\theta_{y^{(i)}}^T x^{(i)}}}{\sum_{j=1}^k e^{\theta_j^T x^{(i)}}}.
-$$
+
+$\ell(\theta)=-\sum_{i=1}^n\log\frac{e^{\theta_{y^{(i)}}^T x^{(i)}}}{\sum_{j=1}^k e^{\theta_j^T x^{(i)}}}$.
+
 Gradient for class parameter $\theta_i$:
-$$
-\frac{\partial\ell}{\partial\theta_i}=\sum_{t=1}^n\big(\mathbb{1}\{y^{(t)}=i\}-\phi_i^{(t)}\big)x^{(t)},
-$$
+
+$\frac{\partial\ell}{\partial\theta_i}=\sum_{t=1}^n\big(\mathbb{1}\{y^{(t)}=i\}-\phi_i^{(t)}\big)x^{(t)}$,
+
 where $\phi_i^{(t)}=\frac{e^{\theta_i^T x^{(t)}}}{\sum_j e^{\theta_j^T x^{(t)}}}$.
 
 ## Unified view — quick table
 
-| Problem | Distribution | Response $g(\eta)$ | Algorithm |
-|---|---|---|---|
-| Continuous prediction | Gaussian | $g(\eta)=\eta$ | Linear regression |
-| Binary classification | Bernoulli | $g(\eta)=\sigma(\eta)$ | Logistic regression |
-| Multi-class | Multinomial | $g(\eta)=\text{softmax}(\eta)$ | Softmax regression |
-| Count data | Poisson | $g(\eta)=e^{\eta}$ | Poisson regression |
-| Prediction / Loss |
-
+| Problem               | Distribution | Response $g(\eta)$             | Algorithm           |
+| --------------------- | ------------ | ------------------------------ | ------------------- |
+| Continuous prediction | Gaussian     | $g(\eta)=\eta$                 | Linear regression   |
+| Binary classification | Bernoulli    | $g(\eta)=\sigma(\eta)$         | Logistic regression |
+| Multi-class           | Multinomial  | $g(\eta)=\text{softmax}(\eta)$ | Softmax regression  |
+| Count data            | Poisson      | $g(\eta)=e^{\eta}$             | Poisson regression  |
+| Prediction / Loss     |
 
 ## Key terminology
 

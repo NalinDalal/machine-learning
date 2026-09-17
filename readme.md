@@ -6,7 +6,7 @@ Supervised Learning: Linear regression, logistic regression, decision trees
 
 - [**linear regression**](./linear-reg.md)
 
-after reading some staticstics we started with [decision tree](./decision-tree.md)
+- [decision tree](./decision-tree.md)
 
 then we started with notes of andrew ng,
 we read about [Generalized Linear Models](./generalized-linear-model.md)

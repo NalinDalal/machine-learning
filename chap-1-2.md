@@ -1,4 +1,6 @@
-You are given a problem, now to solve it we can define a set of instruction or algorithms 
+# Machine Learning
+
+You are given a problem, now to solve it we can define a set of instruction or algorithms
 
 but how about a problem where you can't solve it with help of algorithms or an algorithm can't be simply defined for it??
 
