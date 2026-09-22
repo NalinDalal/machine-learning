@@ -18,3 +18,7 @@ we read about [Generalized Linear Models](./generalized-linear-model.md)
 [unsupervised](unsupervised.md)
 
 [reinforcement](reinforcement.md)
+
+---
+
+[chap 1](./chap-1-2.md)

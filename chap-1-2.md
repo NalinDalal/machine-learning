@@ -264,12 +264,15 @@ housing_tr = pd.DataFrame(X, columns=housing_num.columns)
 
 basically convert text-labels to numbers, we use a transformer for this task called LabelEncoder:
 
-```python3
->>> from sklearn.preprocessing import LabelEncoder
->>> encoder = LabelEncoder()
->>> housing_cat = housing["ocean_proximity"]
->>> housing_cat_encoded = encoder.fit_transform(housing_cat)
->>> housing_cat_encoded
+```python
+from sklearn.preprocessing import LabelEncoder
+encoder = LabelEncoder()
+housing_cat = housing["ocean_proximity"]
+housing_cat_encoded = encoder.fit_transform(housing_cat)
+housing_cat_encoded
+```
+
+```
 array([1, 1, 4, ..., 1, 0, 3])
 ```
 
@@ -281,12 +284,12 @@ housing_cat_1hot.toarray()
 
 ```
 array([[ 0., 1., 0., 0., 0.],
-[ 0., 1., 0., 0., 0.],
-[ 0., 0., 0., 0., 1.],
-...,
-[ 0., 1., 0., 0., 0.],
-[ 1., 0., 0., 0., 0.],
-[ 0., 0., 0., 1., 0.]])
+        [ 0., 1., 0., 0., 0.],
+        [ 0., 0., 0., 0., 1.],
+        ...,
+        [ 0., 1., 0., 0., 0.],
+        [ 1., 0., 0., 0., 0.],
+        [ 0., 0., 0., 1., 0.]])
 ```
 
 apply this transformation in 1 shot via `LabelBinarizer` class:
