@@ -1,9 +1,9 @@
 # Classification
 
 let's start with hello-world of machine learning
-there is a popular data-set `MNIST`, whenever something new is found, tested on `MNIST`
+there is a popular data-set `MNIST`, whenever something new is found, it is tested on `MNIST`
 
-to fetch `MNIST` dataset:
+to fetch `MNIST` dataset, we need to call it from scikit learn library:
 
 ```python
 from sklearn.datasets import fetch_mldata
@@ -14,16 +14,19 @@ mnist
 the output of SciKit DataSet is generally like a simple dictionary
 
 ```
-{'COL_NAMES': ['label', 'data'],
-'DESCR': 'mldata.org dataset: mnist-original',
-'data': array([[0, 0, 0, ..., 0, 0, 0],
-[0, 0, 0, ..., 0, 0, 0],
-[0, 0, 0, ..., 0, 0, 0],
-...,
-[0, 0, 0, ..., 0, 0, 0],
-[0, 0, 0, ..., 0, 0, 0],
-[0, 0, 0, ..., 0, 0, 0]], dtype=uint8),
-'target': array([ 0., 0., 0., ..., 9., 9., 9.])}
+{
+    'COL_NAMES': ['label', 'data'],
+    'DESCR': 'mldata.org dataset: mnist-original',
+    'data': array([
+            [0, 0, 0, ..., 0, 0, 0],
+            [0, 0, 0, ..., 0, 0, 0],
+            [0, 0, 0, ..., 0, 0, 0],
+            ...,
+            [0, 0, 0, ..., 0, 0, 0],
+            [0, 0, 0, ..., 0, 0, 0],
+            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8),
+    'target': array([ 0., 0., 0., ..., 9., 9., 9.])
+}
 ```
 
 take a look at this:
@@ -43,8 +46,8 @@ display via `imshow()`
 import matplotlib
 import matplotlib.pyplot as plt
 
-some_digit = X[36000]
-some_digit_image = some_digit.reshape(28, 28)
+some_digit = X[36000]   #instance selected
+some_digit_image = some_digit.reshape(28, 28)   #reshaped to 28x28 array
 
 plt.imshow(some_digit_image, cmap = matplotlib.cm.binary,interpolation="nearest")
 plt.axis("off")
@@ -61,15 +64,16 @@ X_train, y_train = X_train[shuffle_index], y_train[shuffle_index]
 
 ## Binary Classifier
 
-it's like say you wanna classify `5`, so either it is `5` or 1 or it is `not-5` or 0
+it's like say you wanna classify `5`, so either it is `5`/1 or it is `not-5`/0
+so, it's simple boolean function of a number
+Simple true false logic like a boolean gate
 
 ```python
 y_train_5 = (y_train == 5) # True for all 5s, False for all other digits.
 y_test_5 = (y_test == 5)
 ```
 
-let's pick a classifier: `Stochastic Gradient Descent (SGD)`
-handles large datasets very efficiently
+let's pick a classifier: `Stochastic Gradient Descent (SGD)`, it handles large datasets very efficiently
 
 ```python
 from sklearn.linear_model import SGDClassifier
@@ -105,7 +109,7 @@ for train_index, test_index in skfolds.split(X_train, y_train_5):
 
 ## Confusion Matrix
 
-much better way to check accuracy and evaluate is to look at confusion matrix
+Confusion Matrix is a much better way to check accuracy and evaluate
 
 `cross_val_predict()` performs K-fold cross-validation, but instead of returning the evaluation scores, it returns the predictions made on each test fold.
 
@@ -118,8 +122,7 @@ get confusion matrix via `confusion_matrix()`
 ```python
 from sklearn.metrics import confusion_matrix
 
-cm = confusion_matrix(y_train_5, y_train_pred)
-cm
+cm = confusion_matrix(y_train_5, y_train_pred) #store into cm variable
 ```
 
 row - actual class
@@ -203,9 +206,9 @@ By default, classifiers like `SGDClassifier` assign an instance to the _positive
 ### What Happens When You Adjust the Threshold
 
 - **Raising the threshold** → fewer positive predictions
-<br>  → Higher **precision**, but lower **recall**
+  <br> → Higher **precision**, but lower **recall**
 - **Lowering the threshold** → more positive predictions
- <br> → Higher **recall**, but lower **precision**
+  <br> → Higher **recall**, but lower **precision**
 
 Example:
 
@@ -271,18 +274,21 @@ recall_score(y_train_5, y_train_pred_90)     # ≈ 0.64
 
 ## ROC Curve
 
-receiver operating characteristic (ROC) curve is another common tool used with binary classifiers
+Receiver Operating Characteristic (ROC) curve is another common tool used with binary classifiers
 similar to precision/recall curve but plots `true positive rate (another name for recall) against the false positive rate`
 
-`FPR` is the ratio of negative instances that are incorrectly classified as positive
+`FPR` is the ratio of negative instances that are incorrectly classified as positive;
+layman terms ration of instances which are 0, but classified as 1, to total
 
 $$
     fpr=1-tnr
 $$
 
-tnr(or specificity) is ratio of negative instances that are correctly classified as negative.
+`TNR`(or specificity) is ratio of negative instances that are correctly classified as negative.
+layman terms ratio of instances which are 0, and classified as 0, to total
 
 ROC curve plots sensitivity (recall) versus 1 – specificity.
+ROC Curve: recall vs
 
 you gotta compute TPR and FPR via:
 
@@ -329,7 +335,9 @@ plt.legend(loc="bottom right")
 plt.show()
 ```
 
-## Multiclass Classification
+---
+
+# Multiclass Classification
 
 Unlike binary classification (only two possible outcomes), **multiclass classification** involves **three or more classes**.
 Example: classifying digits 0–9 from the MNIST dataset.
@@ -337,40 +345,43 @@ Example: classifying digits 0–9 from the MNIST dataset.
 Some algorithms (like `RandomForestClassifier`) handle this directly,
 while others (like `SGDClassifier` or `SVC`) are binary and need special strategies.
 
-### Strategies
+## Strategies
 
-#### One-vs-All (OvA)
+### One-vs-All (OvA)
 
 Creates **one binary classifier per class**.
 Each classifier decides “is this class or not?”
 The class with the **highest confidence score** wins.
 
 ```python
-from sklearn.multiclass import OneVsOneClassifier
-ovo_clf = OneVsOneClassifier(SGDClassifier(random_state=42))
-ovo_clf.fit(X_train, y_train)
-len(ovo_clf.estimators_)  # 45 classifiers for 10 digits
+from sklearn.multiclass import OneVsRestClassifier
+
+ova_clf = OneVsRestClassifier(SGDClassifier(random_state=42))
+ova_clf.fit(X_train, y_train)
+len(ova_clf.estimators_)  # 10
 ```
 
-#### One-vs-One (OvO)
+### One-vs-One (OvO)
 
 Creates a **binary classifier for every pair of classes**.
 For `n` classes → `n × (n − 1) / 2` classifiers.
 Each classifier votes → the class with the **most votes** is predicted.
 
-
 `RandomForestClassifier` can handle multiclass directly:
 
 ```python
+from sklearn.multiclass import OneVsOneClassifier
+ovo_clf = OneVsOneClassifier(SGDClassifier(random_state=42))    #instance called and object created
+ovo_clf.fit(X_train, y_train)   #fit over X,Y
+len(ovo_clf.estimators_)  # 45 classifiers for 10 digits
+
 forest_clf = RandomForestClassifier(random_state=42)
 forest_clf.fit(X_train, y_train)
 forest_clf.predict_proba([some_digit])
 # [[0.1, 0., 0., 0.1, 0., 0.8, 0., 0., 0., 0.]]
 ```
 
----
-
-### Evaluating Multiclass Classifiers
+## Evaluating Multiclass Classifiers
 
 Use **cross-validation** to check accuracy:
 
@@ -396,12 +407,11 @@ Use this to analyze which digits (or classes) are being confused most often.
 
 ---
 
-## Multilabel Classification
+# Multilabel Classification
 
 In **multilabel classification**, each instance can have **multiple labels** simultaneously.
+one input can have more than one independent yes/no answer attached to it.
 Example: a face-recognition system might tag a photo as both “Alice” and “Bob”.
-
-### Example
 
 ```python
 from sklearn.neighbors import KNeighborsClassifier
@@ -416,7 +426,7 @@ knn_clf.predict([some_digit])
 # [[False, True]] → Not large, but odd
 ```
 
-### Evaluating Multilabel Models
+## Evaluating Multilabel Models
 
 Use **F1 score** averaged across labels:
 
@@ -433,7 +443,7 @@ f1_score(y_multilabel, y_train_knn_pred, average="macro")
 
 ---
 
-## Multioutput Classification
+# Multioutput Classification
 
 **Multioutput (or multioutput–multiclass)** generalizes multilabel classification:
 each label can have **more than two possible values**.
