@@ -22,4 +22,5 @@ we read about [Generalized Linear Models](./generalized-linear-model.md)
 ---
 
 [Basic ML and Data Cleaning](./chap-1-2.md)
-[chap 3](./chap-3.md)
+[classification](./chap-3.md)
+[Training Models](./chap-4.md)

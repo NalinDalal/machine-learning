@@ -1,6 +1,6 @@
-# Training models
+# Training Models
 
-well you saw the algorithm, trained them and wrote your own system without knowing th einternal
+well you saw the algorithm, trained them and wrote your own system without knowing the internal
 let's take a look at linear regression{most basic algorithm}
 2 ways to train it:
 
@@ -8,9 +8,11 @@ let's take a look at linear regression{most basic algorithm}
 - iterative optimization that gradually tweaks model params to minimise cost functions.
 
 1. Linear Regression
-2. regularization techniques
+2. Regularization techniques
 3. Logistic Regression
-4. SOftmax Regression
+4. Softmax Regression
+
+---
 
 ## Linear Regression
 
@@ -26,8 +28,10 @@ $$
 \text{life_satisfaction} = \theta_0 + \theta_1 \times \text{GDP_per_capita}
 $$
 
-model is just a **linear function** of the input feature `GDP_per_capita`.
-$\theta_0$ and $\theta_1$ are model params
+A Model is just a **linear function** of the input feature `GDP_per_capita`.
+$\theta_0$ and $\theta_1$ are model params.
+
+> NOTE: A Machine Learning Model is a Linear Function of its Input Features.
 
 A prediction is made by computing a **weighted sum of the input features**, plus a constant called the **bias term**.
 
@@ -58,7 +62,9 @@ Where:
 - ( x_0 = 1 ) (bias feature)
 - ( h\_\theta(x) ): **hypothesis function**
 
-### MSE cost function of linear regression model
+### MSE Cost Function of Linear Regression Model
+
+MSE- Mean Square Error. It measures how wrong your model's predictions are on average.
 
 $$
 MSE(X, h_\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( \theta^T x^{(i)} - y^{(i)} \right)^2
@@ -67,22 +73,21 @@ $$
 Where ( m ) is the number of training instances.
 
 **Normal Equation**
-mathematical equation that minimises the cost function
+They are mathematical equation that minimises the cost function.
 
 $$
 \hat{\theta} = (X^T X)^{-1} X^T y
 $$
 
-theta cap=(X riased to T _ X) raised to -1 _ X raised to T \* y
+theta cap=(X raised to T _ X) raised to -1 _ X raised to T \* y
 -( \hat{\theta} )=value of theta minimising cost function
 
 - X = matrix of features
 - y vector = vector of target values containing y(1) to y(m)
 
-doing it with help of algorithms
+doing it with help of [algorithms](./linear-reg.py)
 
-**step 1:**
-generate linear looking data
+**step 1:** Generate a linear looking data
 
 ```python
 import numpy as np
@@ -125,13 +130,14 @@ $$
 
 ## Gradient Descent
 
-general idea of Gradient Descent is to tweak parameters iteratively in order to minimize a cost function.
+The general idea of Gradient Descent is to tweak parameters iteratively in order to minimize a cost function.
+What it does:
 
-exactly what is does:
-measures the local gradient of the error function with regards to the
-parameter vector θ, and it goes in the direction of descending gradient. Once the gradient is zero, you have reached a minimum!
+1. Measures the local gradient of the error function with regards to the parameter vector θ,
+2. then goes in the direction of descending gradient.
+3. Once the gradient is zero, you have reached a minimum!
 
-you feel theta with random values and gradually improve it over no of iterations until the algorithm converges
+you feed theta with random values and gradually improve it over no of iterations until the algorithm converges
 to a minimum.
 
 an important parameter: **learning rate hyperparameter**
@@ -212,16 +218,16 @@ array([[ 4.21509616],[ 2.77011339]])
 
 ### Stochastic Gradient Descent
 
-problem with Gradient Descent: uses whole training set at each step and computes the gradients based only on that single instance.
+Problem with Gradient Descent: uses whole training set at each step and computes the gradients based only on that single instance.
 
-fast cause low data to iterate over
-but less regular, cost jumps are too unpredictable
-When the cost function is very irregular, this can actually help the algorithm jump out of local minima, so Stochastic Gradient Descent has a better chance of finding the global minimum than Batch Gradient Descent does.
+Relatively fast because low data to iterate over but less regular, therefore cost jumps are too unpredictable.
+When the cost function is very irregular, this can actually help the algorithm jump out of local minima,
+Stochastic Gradient Descent has a better chance of finding the global minimum than Batch Gradient Descent does.
 
-but algo then stays on dilemma, so gradually reduce the learning rate. to settle at global minima
-process is called simulated annealing.
+but then Algo stays on dilemma, hence gradually reduce the learning rate to settle at global minima.
+This process is called simulated annealing.
 
-function that determines the learning rate at each iteration is called the learning schedule.
+The function that determines the learning rate at each iteration is called the learning schedule.
 
 ```python
 n_epochs = 50
@@ -251,9 +257,11 @@ sgd_reg.fit(X, y.ravel())
 
 ## Polynomial Regression
 
-what if not linear, maybe more complex data
-use polymonial regression for it:
-add powers of each feature as new features, then train a linear model on this extended set of features
+What if data is not in linear fashion.
+It might be more complex data, we use polymonial regression for it:
+
+1. Add powers of each feature as new features,
+2. train a linear model on this extended set of features
 
 ```python
 m = 100
@@ -274,7 +282,7 @@ lin_reg.intercept_, lin_reg.coef_
 
 ## Learning Curves
 
-plots of the model’s performance on the training set and the validation set as a function of the training set size.
+It is basically plots of the model’s performance on the training set and the validation set as a function of the training set size.
 
 ```python
 from sklearn.metrics import mean_squared_error
@@ -482,15 +490,13 @@ for epoch in range(1000):
 
 ## Logistic Regression
 
-well it's like model predicts if an instance belongs to a class or not
-if probability>50% then 1{belongs}
-else 0{not belongs}
+It's like model predicts if an instance belongs to a class or not.
+If probability>50% then 1{belongs}
+Else 0{not belongs}
 
-to find probabilities:
-we use a sigmoid function:
+To find probabilities, we use a sigmoid function:
 
 probability:
-
 [
 \hat{p} = P(y = 1 \mid x) = \sigma(\theta^T x) = \frac{1}{1 + e^{-\theta^T x}}
 ]
@@ -510,13 +516,13 @@ sigmoid:
 
 ## Training & Cost Function
 
-#### 1. Probability function
+1.  Probability function
 
 [
 \hat{p} = \sigma(\theta^T x) = \frac{1}{1 + e^{-\theta^T x}}
 ]
 
-#### 2. Prediction rule
+2.  Prediction rule
 
 [
 \hat{y} =
@@ -526,7 +532,7 @@ sigmoid:
 \end{cases}
 ]
 
-#### 3. Cost function (Log Loss)
+3.  Cost function (Log Loss)
 
 [
 J(\theta) = -\frac{1}{m} \sum\_{i=1}^{m} [y^{(i)} \log(\hat{p}^{(i)}) + (1 - y^{(i)}) \log(1 - \hat{p}^{(i)})]
@@ -536,13 +542,13 @@ J(\theta) = -\frac{1}{m} \sum\_{i=1}^{m} [y^{(i)} \log(\hat{p}^{(i)}) + (1 - y^{
 
 A **decision boundary** is the line (in 2D), plane (in 3D), or hyperplane (in nD) that **separates the predicted classes** in a classification problem.
 
-It’s where the model is **“undecided”** — i.e. the probability of belonging to class 1 is exactly **0.5**.
+It’s where the model is **“undecided”** i.e. the probability of belonging to class 1 is exactly **0.5**.
 
 - It’s the **line** where the classifier switches its decision.
 - Logistic regression always forms a **linear decision boundary** (a straight line or plane).
 - Nonlinear models (like polynomial or neural nets) can form **curved** decision boundaries.
 
-#### For Logistic Regression:
+### For Logistic Regression:
 
 We know:
 [
@@ -566,7 +572,7 @@ we get:
 
 That’s the **equation of the decision boundary**.
 
-#### Example
+### Example
 
 If
 [
@@ -594,7 +600,7 @@ s_k(x) = \theta_k^T x
 Then apply the **softmax function** to convert these scores into probabilities:
 
 [
-\hat{p}*k = \frac{e^{s_k(x)}}{\sum*{j=1}^{K} e^{s_j(x)}}
+\hat{p}_k = \frac{e^{s_k(x)}}{\sum_{j=1}^{K} e^{s_j(x)}}
 ]
 
 where:
