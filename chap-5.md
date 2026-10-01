@@ -285,7 +285,7 @@ $$
 
 ## Online SVM
 
-use Gradient Descent (e.g., using `SGDClassifier`) to minimize the cost function. Linear SVM classifier cost (hinge loss + regularization):
+We use Gradient Descent (e.g., using `SGDClassifier`) to minimize the cost function. Linear SVM classifier cost (hinge loss + regularization):
 
 $$
 J(\mathbf{w},b) = \frac{1}{2}\,\mathbf{w}^\top\mathbf{w} + C\sum_{i=1}^m \max\big(0,\;1 - t^{(i)}(\mathbf{w}^\top\mathbf{x}^{(i)} + b)\big).
