@@ -249,10 +249,7 @@ $$
 * **Kernel trick:**
   Instead of explicitly computing $\phi(\mathbf{x})$, we can use the identity (for this mapping):
 
-$$
-\phi(\mathbf{a})^\top\phi(\mathbf{b}) = (\mathbf{a}^\top\mathbf{b})^2.
-$$
-  So the dot product in the transformed space can be computed directly from the original vectors.
+$\phi(\mathbf{a})^\top\phi(\mathbf{b}) = (\mathbf{a}^\top\mathbf{b})^2$. So the dot product in the transformed space can be computed directly from the original vectors.
 
 * **Kernel function:**
   A kernel $K(\mathbf{a},\mathbf{b})$ is defined as
