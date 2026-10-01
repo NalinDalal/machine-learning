@@ -1,27 +1,23 @@
 # [Support Vector Machine](./svm.py)
 
-Machine Learning Model that is capable of performing linear or nonlinear classification, regression, and even
-outlier detection
+It is a Machine Learning Model that is capable of performing linear or nonlinear classification, regression, and even outlier detection.
 
 ## Linear SVM Classification
-u can classify data with a straight line(linearly sperable)
-dashed lines show bad model so that can't even separate classes properly
+You can classify data with a straight line(linearly sperable).
+A dashed lines show bad model so that can't even separate classes properly; but it also tries to stay away from the training data.
 
-but it also tries to stay away from the training data
+Adding more training instances “off the street” does not affects the decision boundary at all: it is fully determined (or “supported”) by the instances located on the edge of the street.
 
-adding more training instances “off the street” will not affect the decision
-boundary at all: it is fully determined (or “supported”) by the instances located on the edge of the street.
-
-called `support vectors`
+They are called `support vectors`.
 
 ## Soft Margin Classification
 
-hard margin classification: strictly impose that all instances be off the street and on the right side
-2 issues: works only if data is linearly separable, sensitive to outliers
+**Hard Margin Classification**: It strictly impose that all instances be off the street and on the right side.
+But 2 issues: it works only if data is linearly separable & sensitive to outliers
 
-soft margin classification: more flexible model.find a good balance between keeping the street as large as possible and limiting the margin violations
+**Soft Margin Classification**: It is more flexible model.We find a good balance between keeping the street as large as possible and limiting the margin violations.
 
-control this balance by using C hyperparameter: a smaller C value leads to a wider street but more margin violations
+We control this balance by using `C` hyperparameter: a smaller `C` value leads to a `wider` street but `more margin` violations.
 
 ```python
 import numpy as np
@@ -42,12 +38,14 @@ svm_clf.fit(X_scaled, y)
 svm_clf.predict([[5.5, 1.7]])
 ```
 
-they do not output probabilities.
+Note: This do not output probabilities.
 
 ## Non Linear SVM Classification
 
-many datasets are not even close to being linearly separable. One approach to
-handling nonlinear datasets is to add more features, such as polynomial features 
+Many datasets are/will not even close to being linearly separable. 
+One approach to handling nonlinear datasets is to add more features, such as `polynomial features`.
+
+> Adding More Features
 
 we use a polynomial regression
 
@@ -65,10 +63,10 @@ polynomial_svm_clf.fit(X, y)
 
 ## Polynomial Kernel
 
-low polynomial degree: can't deal with complex data
-high polynomial degree: large no of features, model becomes slow
+Low Polynomial Degree: This can't deal with complex data.
+High Polynomial Degree: This has large no of features, ultimately model becomes slow.
 
-apply kernel trick to get results similar to high polynomial degree without actually adding them.
+We apply `kernel trick` to get results similar to high polynomial degree without actually adding them.
 
 ```python
 from sklearn.svm import SVC
@@ -78,10 +76,11 @@ poly_kernel_svm_clf = Pipeline((
 ))
 poly_kernel_svm_clf.fit(X, y)
 ```
-This code trains an SVM classifier
+We basically train an SVM classifier.
 
 ## Adding Similarity Features
-add features computed using a similarity function that measures how much each instance resembles a particular landmark
+
+Add features computed using a similarity function that measures how much each instance resembles a particular landmark.
 
 similarity function: Gaussian Radial Basis Function (RBF) with γ = 0.3
 ```mermaid
@@ -98,26 +97,28 @@ flowchart LR
 
 ## Gaussian RBF Kernel
 
-expensive to use similarity features method
-possible to obtain a similar result as if you had added many similarity features, without actually having to add them.
+It is expensive to use similarity features method.
+It is possible to obtain a similar result as if you had added many similarity features, without actually having to add them.
 
 ```python
 rbf_kernel_svm_clf = Pipeline((
-("scaler", StandardScaler()),
-("svm_clf", SVC(kernel="rbf", gamma=5, C=0.001))
+    ("scaler", StandardScaler()),
+    ("svm_clf", SVC(kernel="rbf", gamma=5, C=0.001))
 ))
 rbf_kernel_svm_clf.fit(X, y)
 ```
 
 ## Computational Complexity
-The LinearSVC class is based on the liblinear library, which implements an optimized
-algorithm for linear SVMs.1 It does not support the kernel trick, but it scales almost linearly with the number of training instances and the number of features: its training
+
+The LinearSVC class is based on the liblinear library, which implements an optimized algorithm for linear SVMs.
+It does not support the kernel trick, but it scales almost linearly with the number of training instances and the number of features: its training
 time complexity is roughly O(m × n).
 
-controlled by
-the tolerance hyperparameter ϵ (called tol in Scikit-Learn). In most classification tasks, the default tolerance is fine.
-Time complexity: b/w `O(m2*n)` and `O(m3*n)`.
-Add features computed using a similarity function that measures how much each instance resembles a particular landmark (a "prototype" or "landmark" \(\ell\)). A common similarity is the Gaussian radial basis function (RBF):
+It's controlled by the tolerance hyperparameter ϵ (called tol in Scikit-Learn). 
+In most classification tasks, the default tolerance is fine.
+Time complexity: b/w `O(m^2*n)` and `O(m^3*n)`.
+Add features computed using a similarity function that measures how much each instance resembles a particular landmark (a "prototype" or "landmark"). 
+A common similarity is the Gaussian radial basis function (RBF):
 
 $$
 \phi_{\gamma}(\mathbf{x},\ell) = \exp\bigl(-\gamma\,\|\mathbf{x}-\ell\|^2\bigr).
@@ -126,13 +127,12 @@ $$
 Use many landmarks (or the kernel trick) to turn each instance into a vector of similarity features.
 
 ## SVM Regression
-supports linear-nonlinear classification as well as regression
+It supports linear-nonlinear classification as well as regression.
 
-trick is to reverse the objective: instead of trying to fit the largest possible street between two classes while limiting margin violations, SVM Regression
-tries to fit as many instances as possible on the street while limiting margin violations (i.e., instances off the street).
+Instead of trying to fit the largest possible street between two classes while limiting margin violations,trick is to reverse the objective:
+SVM Regression tries to fit as many instances as possible on the street while limiting margin violations (i.e., instances off the street).
 
-Adding more training instances within the margin does not affect the model’s predic‐
-tions; thus, the model is said to be ϵ -insensitive.
+Adding more training instances within the margin does not affect the model’s predictions; thus, the model is said to be ϵ -insensitive.
 
 ```python
 from sklearn.svm import LinearSVR
@@ -141,7 +141,8 @@ svm_reg.fit(X, y)
 ```
 
 
-SVR class (which supports the kernel trick). The SVR class is the regression equivalent of the SVC class, and the LinearSVR class is the regression equivalent of the LinearSVC class
+**SVR class** (which supports the kernel trick). 
+The SVR class is the regression equivalent of the SVC class, and the LinearSVR class is the regression equivalent of the LinearSVC class
 ```python
 from sklearn.svm import SVR
 svm_poly_reg = SVR(kernel="poly", degree=2, C=100, epsilon=0.1)
@@ -150,7 +151,7 @@ svm_poly_reg.fit(X, y)
 
 decision function:
 ```
-wT· x + b = w1 x1 + ⋯ + wn xn + b
+wT· x + b = w1 x1 + . . . .  + wn xn + b
 ```
 ```mermaid
 flowchart TD
@@ -167,40 +168,33 @@ flowchart TD
 ```
 
 ## Training Objective
-slope of the decision function= norm of the weight vector, || w ||
+Slope of the decision function= norm of the weight vector, || w ||
 
-dividing the slope by 2 will multiply the margin by 2
+Dividing the slope by 2 will multiply the margin by 2
 The smaller the weight vector w, the larger the margin.
 
+margin is inversely proportional to the norm of the weight vector.
 
-minimise ||w|| to get large margin
+We minimise ||w|| to get large margin.
 
-Define t^{(i)} = -1 for negative instances (if y^{(i)} = 0) and t^{(i)} = +1 for positive instances (if y^{(i)} = 1). The hard-margin linear SVM objective is
+Define $t^{i} = -1$ for negative instances (if $y^{i} = 0$) and $t^{i} = +1$ for positive instances (if $y^{i} = 1$). 
+The hard-margin linear SVM objective is
 
-$$
+$
 \min_{\mathbf{w},b}\; \tfrac{1}{2}\,\mathbf{w}^\top \mathbf{w}
-$$
+$
 
 subject to
 
-$$
+$
 t^{(i)}\bigl(\mathbf{w}^\top \mathbf{x}^{(i)} + b\bigr) \ge 1,\qquad i=1,\dots,m.
-$$
+$
 
 
 ## Quadratic Programming
 
-The general form of a quadratic programming (QP) problem is
-
-$$
-\min_{\mathbf{p}}; \tfrac{1}{2},\mathbf{p}^\top \mathbf{H}\\,\mathbf{p} + \mathbf{f}^\top \mathbf{p}
-$$
-
-subject to
-
-$$
-\mathbf{A}\\,\mathbf{p} \le \mathbf{b}.
-$$
+The general form of a quadratic programming (QP) problem is $\min_{\mathbf{p}}; \tfrac{1}{2},\mathbf{p}^\top \mathbf{H}\\,\mathbf{p} + \mathbf{f}^\top \mathbf{p}$
+subject to $\mathbf{A}\\,\mathbf{p} \le \mathbf{b}$.
 
 Here:
 
@@ -222,9 +216,7 @@ You can obtain the hard-margin linear SVM objective by setting the QP parameters
 
 ## Dual Problem
 
-```mermaid
-flowchart TD
-  A["Equation 5-6: Dual form of the linear SVM objective
+   Dual form of the linear SVM objective:
 
   $$\min_{\alpha}\;\; \frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^{m}\alpha^{(i)}\alpha^{(j)}t^{(i)}t^{(j)}\,x^{(i)T}x^{(j)}
   \;-\;\sum_{i=1}^{m}\alpha^{(i)}$$
@@ -232,8 +224,7 @@ flowchart TD
   subject to:
 
   $$\alpha^{(i)} \ge 0 \quad \text{for } i=1,2,\dots,m$$
-  "]
-```
+  
 
 
 
@@ -297,9 +288,7 @@ $$
 
 ## Online SVM
 
-use Gradient Descent (e.g., using `SGDClassifier`) to minimize the cost function.
-
-Equation 5-13: Linear SVM classifier cost (hinge loss + regularization):
+use Gradient Descent (e.g., using `SGDClassifier`) to minimize the cost function. Linear SVM classifier cost (hinge loss + regularization):
 
 $$
 J(\mathbf{w},b) = \frac{1}{2}\,\mathbf{w}^\top\mathbf{w} + C\sum_{i=1}^m \max\big(0,\;1 - t^{(i)}(\mathbf{w}^\top\mathbf{x}^{(i)} + b)\big).
