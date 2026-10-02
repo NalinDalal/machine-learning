@@ -1,10 +1,3 @@
-"""
-A simple implementation of the ID3 Decision Tree algorithm (Quinlan, 1986)
-for categorical data, with entropy and information gain.
-
-This is a minimal, educational version for demonstration purposes.
-"""
-
 import math
 from collections import Counter, defaultdict
 
@@ -107,12 +100,12 @@ if __name__ == "__main__":
     # Example: Play Tennis dataset (simplified)
     feature_names = ["Outlook", "Humidity"]
     data = [
-        ["Sunny", "High"],
-        ["Sunny", "Normal"],
-        ["Overcast", "High"],
-        ["Rain", "High"],
-        ["Rain", "Normal"],
-        ["Overcast", "Normal"],
+        ["Sunny", "High"],  # it is a sunny day,
+        ["Sunny", "Normal"],  # it is a normal day
+        ["Overcast", "High"],  # humidity is high
+        ["Rain", "High"],  # it is rainy day
+        ["Rain", "Normal"],  # it is normal day
+        ["Overcast", "Normal"],  # humidity is normal
     ]
     labels = ["No", "Yes", "Yes", "No", "Yes", "Yes"]
     tree = id3(data, labels, feature_names)
