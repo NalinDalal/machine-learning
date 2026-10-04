@@ -1,40 +1,45 @@
 # Ensemble Learning and Random Forests
 
 ## Ensemble Learning
-if you aggregate the predictions of a group of predictors (such as classifiers or regressors), you will often get better predictions than with the best individual predictor. 
-A group of predictors is called an ensemble
-technique is called ensemble learning
 
-Ensemble Learning algorithm is called an Ensemble method
+If you aggregate/combine/merge the predictions of a group of predictors (such as classifiers or regressors), you will often get better predictions than with the best individual predictor.
+grouping multiple prediction >>>>>>>> individual prediction.
+
+A group of predictors is called an ensemble; technique is called ensemble learning.
+
+Ensemble Learning algorithm is called an Ensemble method.
 
 we will discuss some popular methods: bagging, boosting, stacking, random forest etc
 
 ## [Voting Classifiers](./voting-classifier.py)
 
-u have few classifiers, Logistic Regression, an SVM, a Random Forest, a K-Nearest Neighbors, etc
+We have a few classifiers like, Logistic Regression, an SVM, a Random Forest, a K-Nearest Neighbors, etc
 
-more better way: aggregate all and predict the class that gets the most votes
-This majority-vote classifier is called a hard voting classifier
+What could be a more better way: Aggregate all and predict the class that gets the most votes
+This majority-vote classifier is called a Hard Voting Classifier.
+_Hard Voting Classifier_: Aggregate all classes and return the class with most votes. It's a democracy.
 
-even if classifier are weak, ensemble can still be strong
+Even if classifier are weak, ensemble can still be strong.
 
-creates and trains a voting classifier in Scikit-Learn, composed of three diverse classifiers
+Create and train a voting classifier in Scikit-Learn, composed of three diverse classifiers
+
 ```python
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import VotingClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
-log_clf = LogisticRegression()
-rnd_clf = RandomForestClassifier()
-svm_clf = SVC()
+log_clf = LogisticRegression()  #call the logistic regression
+rnd_clf = RandomForestClassifier() #call the random forest
+svm_clf = SVC() #call the simple vector machine
 voting_clf = VotingClassifier(
-estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)],
-voting='hard'
+    estimators=[('lr', log_clf), ('rf', rnd_clf), ('svc', svm_clf)],    #vote on all 3 classifiers
+    voting='hard'   #type of voting is hard
 )
 voting_clf.fit(X_train, y_train)
 ```
 
-accuracy on test set
+Let's measure accuracy on a test set:
+
 ```sh
 >>> from sklearn.metrics import accuracy_score
 >>> for clf in (log_clf, rnd_clf, svm_clf, voting_clf):
@@ -47,69 +52,70 @@ SVC 0.888
 VotingClassifier 0.896
 ```
 
-outperforms all individual classifiers
+Voting based Classifiers outperforms all individual classifiers.
 
 soft voting classifiers: tell Scikit-Learn to predict the class with the highest class probability, averaged over all the individual classifiers.
 
 all need to do is replace `voting="hard"` with `voting="soft"`
 
 ## Bagging & Pasting
-another approach is to use the same training algorithm for every
-predictor, but to train them on different random subsets of the training set
 
-known as bagging
+Another approach, **Bagging**: Same training algorithm for every predictor, but to train them on different random subsets of the training set
 
-When sampling is performed without replacement, it is called pasting.
+**Pasting**: When sampling is performed without replacement.
 
-Once all predictors are trained, the ensemble can make a prediction for a new instance by simply aggregating the predictions of all predictors
-aggregation function is typically the *statistical mode*
+Once all predictors are trained, the ensemble can make a prediction: by aggregating the predictions of all predictors
+aggregation function is typically the _statistical mode_
 
 ### [Bagging and Pasting in Scikit-Learn](./bagging.py)
+
 ```python
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 bag_clf = BaggingClassifier(
 DecisionTreeClassifier(), n_estimators=500, #500 decision tree classifiers
-max_samples=100, bootstrap=True, n_jobs=-1  #100 training instances; n_jobs: number of CPU cores to use for training and predictions
-#-1 means all
+    max_samples=100, bootstrap=True,  #100 training instances;
+    n_jobs=-1 #n_jobs: number of CPU cores to use for training and predictions
+    #-1 means all
 )
 bag_clf.fit(X_train, y_train)
 y_pred = bag_clf.predict(X_test)
 ```
 
-ensemble’s predictions will likely generalize much better than the single Decision Tree’s predictions: the ensemble has a
-comparable bias but a smaller variance
+Ensemble method’s predictions will likely generalize much better than the single Decision Tree’s predictions: the ensemble has a
+comparable bias but a smaller variance.
 
-Overall, bagging often results in better models
+Overall, bagging often results in better models.
 
 ### [Out of Bag Evaluation](./bagging-out.py)
-a BaggingClassifier samples m(training set size) training instances with replacement
+
+A BaggingClassifier samples m(training set size) training instances with replacement
 
 63% only sampled, 37% not sampled i.e. out-of-bag (oob) instances
 
 set `oob_score=True` when creating a BaggingClassifier to request an automatic oob evaluation after training
 
 ### Random Patches and Random Subspaces
-The BaggingClassifier class supports sampling the features as well. 
 
-controlled by two hyperparameters: max_features and bootstrap_features. 
+The BaggingClassifier class supports sampling the features as well.
+
+controlled by two hyperparameters: max_features and bootstrap_features.
 
 work same way as max_samples and bootstrap, but for feature sampling.
 Thus, each predictor will be trained on a random subset of the input features.
-useful when you are dealing with high-dimensional inputs (such as images). 
+useful when you are dealing with high-dimensional inputs (such as images).
 Sampling both training instances and features is called the Random Patches method.
 7 Keeping all training instances (i.e., bootstrap=False and max_samples=1.0) but sampling features (i.e., bootstrap_features=True and/or max_features smaller than 1.0) is called the Random Subspaces method.
-
 
 Sampling features results in even more predictor diversity, trading a bit more bias for a lower variance.
 
 ## [Random Forest](./random-forest.py)
 
-a Random Forest is an ensemble of Decision Trees
+A Random Forest is an ensemble of Decision Trees.
 
-trained via the bagging/pasting method, typically with max_samples set to the size of the training set
+It is trained via the bagging/pasting method, typically with max_samples set to the size of the training set.
 
-more convenient and optimized for Decision Trees
+This is more convenient and optimized for Decision Trees.
 
 ```python
 from sklearn.ensemble import RandomForestClassifier
@@ -120,19 +126,20 @@ y_pred_rf = rnd_clf.predict(X_test)
 
 a RandomForestClassifier has all the hyperparameters of a DecisionTreeClassifier+BaggingClassifier
 
-introduces extra randomness for tree
-searches for the best feature among a random subset of features
+It introduces extra randomness for tree. and searches for the best feature among a random subset of features.
 
 ### Extra Trees
-forest of such extremely random trees is simply called an Extremely Randomized Trees ensemble(Extra Tree)
+
+A forest of such extremely random trees is simply called an Extremely Randomized Trees ensemble(Extra Tree)
 makes Extra-Trees much faster to train than regular Random Forests since finding the best possible threshold for each feature at every node is one of the most time-consuming tasks of growing a tree.
 
 create via `ExtraTreesClassifier` class
 
 ### Feature importance
-decision tree: root(important feature), leaf(unimportant)
 
-possible to get an estimate of a feature’s importance by computing the average depth at which it appears across all trees in the fores
+Decision Tree: root(important feature), leaf(unimportant)
+
+It is possible to get an estimate of a feature’s importance by computing the average depth at which it appears across all trees in the forest.
 
 ```python
 from sklearn.datasets import load_iris
@@ -151,9 +158,10 @@ petal width (cm) 0.423357996355
 ```
 
 ## Boosting
-refers to any Ensemble method that can combine several weak learners into a strong learner.
 
-idea: train predictors sequentially, each trying to correct its predecessor.
+It refers to any Ensemble method that can combine several weak learners into a strong learner.
+
+Idea: train predictors sequentially, each trying to correct its predecessor.
 example: AdaBoost, Gradient Boosting
 
 ### [Adaptive Boosting(AdaBoost)](./AdaBoost.py)
@@ -169,15 +177,15 @@ hence new predictor focuses more on hard cases
 ```python
 from sklearn.ensemble import AdaBoostClassifier
 ada_clf = AdaBoostClassifier(
-DecisionTreeClassifier(max_depth=1), n_estimators=200,
-algorithm="SAMME.R", learning_rate=0.5
+    DecisionTreeClassifier(max_depth=1), n_estimators=200,
+    algorithm="SAMME.R", learning_rate=0.5
 )
 ada_clf.fit(X_train, y_train)
 ```
 
-similar to gradient descent except that instead of tweaking a single predictor’s parameters to minimize a cost function, AdaBoost adds predictors to the ensemble, gradually making it better.
+similar to gradient descent except that instead of tweaking a single predictor’s parameters to minimize a cost function, AdaBoost *_adds predictors_ to the ensemble, gradually making it better.
 
-each instance weight $w^i$ set to $1/m$, train 1st predictor and compute weighted error rate $r \subscript 1$
+Each instance weight $w^i$ set to $1/m$, train 1st predictor and compute weighted error rate $r \subscript 1$
 
 **Equation 7-1. Weighted error rate of the jth predictor**
 
@@ -185,7 +193,7 @@ $$
 r_j \;=\; \frac{\sum_{i=1}^{m} w^{(i)}\mathbf{1}\{\hat{y}_j^{(i)} \ne y^{(i)}\}}{\sum_{i=1}^{m} w^{(i)}}
 $$
 
-where $\hat{y}_j^{(i)}$ is the $j$th predictor's prediction for the $i$th instance.
+where $\hat{y}_j^{(i)}$ is the *j*th predictor's prediction for the *i*th instance.
 
 **Equation 7-2. Predictor weight**
 
@@ -208,16 +216,15 @@ $$
 **Equation 7-4. AdaBoost predictions**
 
 $$
-\hat{y}(\mathbf{x}) \;=\; \operatorname{argmax}_k \sum_{j=1}^{N} \alpha_j\,\mathbf{1}\{\hat{y}_j(\mathbf{x}) = k\}
+\hat{y}(\mathbf{x}) = \operatorname*{argmax}_k \sum_{j=1}^{N} \alpha_j \, \mathbf{1}\{\hat{y}_j(\mathbf{x}) = k\}
 $$
 
 where $N$ is the number of predictors.
 
 ### [Gradient Boosting](./gradient-boosting.py)
 
-works by sequentially adding predictors to an ensemble, each one correcting its predecesso
-
-but instead of tweaking the instance weights at every iteration like AdaBoost does, this method tries to fit the new predictor to the residual errors made by the previous predictor.
+It works by sequentially adding predictors to an ensemble, each one correcting its predecessor.
+But instead of tweaking the instance weights at every iteration like AdaBoost does, we try to fit the new predictor to the residual errors made by the previous predictor.
 
 [**Gradient Tree Boosting, or Gradient Boosted Regression Trees (GBRT)**](./gradient-tree-boosting.py)
 fit a DecisionTreeRegressor to the training set
@@ -242,39 +249,43 @@ y_pred = sum(tree.predict(X_new) for tree in (tree_reg1, tree_reg2, tree_reg3))
 ```
 
 more simple way:
+
 ```python
 from sklearn.ensemble import GradientBoostingRegressor
 gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=3, learning_rate=1.0)
 gbrt.fit(X, y)
 ```
 
-learning_rate hyperparameter scales the contribution of each tree
-if low then more tree needed, but prediction generalise better
-regularization technique called shrinkage.
+`learning_rate` hyperparameter scales the contribution of each tree;
+if low then more tree needed, but prediction generalise better;
+Regularization technique is called shrinkage.
 
-to find optimal number of trees, use early stopping
+To find optimal number of trees-> use early stopping
 use the staged_predict() method: it returns an iterator over the predictions made by the ensemble at each stage of training
 
 trains a GBRT ensemble with 120 trees, then measures the validation error at each stage of training to find the optimal number of trees, and finally trains another GBRT ensemble using the optimal number of trees
+
 ```python
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+
 X_train, X_val, y_train, y_val = train_test_split(X, y)
+
 gbrt = GradientBoostingRegressor(max_depth=2, n_estimators=120)
 gbrt.fit(X_train, y_train)
+
 errors = [mean_squared_error(y_val, y_pred)
+
 for y_pred in gbrt.staged_predict(X_val)]
-bst_n_estimators = np.argmin(errors)
-gbrt_best = GradientBoostingRegressor(max_depth=2,n_estimators=bst_n_estimators)
+    bst_n_estimators = np.argmin(errors)
+    gbrt_best = GradientBoostingRegressor(max_depth=2,n_estimators=bst_n_estimators)
 gbrt_best.fit(X_train, y_train)
 ```
 
-
 ## Stacking
- instead of using trivial functions (such as hard voting) to aggregate the predictions of all predictors in an ensemble, why don’t we train a model to perform this aggregation
 
-
+instead of using trivial functions (such as hard voting) to aggregate the predictions of all predictors in an ensemble, why don’t we train a model to perform this aggregation
 
 Each of the bottom three predictors predicts a different value (3.1, 2.7, and 2.9), and then the final predictor (called a blender, or a meta learner) takes these predictions as inputs and makes the final prediction (3.0).
 
@@ -284,13 +295,13 @@ flowchart LR
     new --> p1["Predictor 1<br> 3.1"]
     new --> p2["Predictor 2<br> 2.7"]
     new --> p3["Predictor 3<br>2.9"]
-    p1 --> blend[["Blender / Meta-learner"]]
+    p1 --> blend["Blender / Meta-learner"]
     p2 --> blend
     p3 --> blend
     blend --> final(("Final prediction<br>3.0"))
 ```
 
-training 1st layer
+**Training 1st layer** =>
 
 ```mermaid
 flowchart TB
@@ -306,7 +317,8 @@ flowchart TB
     train3 --> ensemble
     ensemble --> preds["Predictions"]
 ```
-training the blender
+
+**Training the blender** =>
 
 Each predictor makes predictions on the blending training set (held-out subsets). The blender (meta-learner) is then trained on those predictions to combine them.
 
