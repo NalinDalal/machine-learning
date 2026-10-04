@@ -147,6 +147,9 @@ if too large might jump across the valley, never reaching the minima
 hence we use the MSE function to converge it
 pick 2 points on curve, join them, if line never hits the curve then there are no local minima, only a single global minima
 
+**gradient descent:**
+$$\theta := \theta - \alpha\nabla_\theta J(\theta)$$
+
 ### Batch Gradient Descent
 
 calulate how much cost function will change if you change theta_j just a little bit{partial derivative}
@@ -223,6 +226,24 @@ Problem with Gradient Descent: uses whole training set at each step and computes
 Relatively fast because low data to iterate over but less regular, therefore cost jumps are too unpredictable.
 When the cost function is very irregular, this can actually help the algorithm jump out of local minima,
 Stochastic Gradient Descent has a better chance of finding the global minimum than Batch Gradient Descent does.
+
+**Stochastic Gradient Descent (SGD):**
+
+```
+for i = 1 to n_iter:
+    sample j uniformly from {1, ..., n}
+    θ := θ - α∇_θ J^(j)(θ)
+```
+
+**mini-batch SGD:**
+
+```
+for i = 1 to n_iter:
+    sample B examples j_1, ..., j_B
+    θ := θ - (α/B) Σ_k ∇_θ J^(j_k)(θ)
+```
+
+mini-batch is usually fastest because we can parallelize on GPUs!
 
 but then Algo stays on dilemma, hence gradually reduce the learning rate to settle at global minima.
 This process is called simulated annealing.

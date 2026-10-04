@@ -2,7 +2,7 @@
 
 it all started with one person who was trying to find patterns, hence the 1st concept itself is
 
-Supervised Learning: Linear regression, logistic regression, decision trees
+Supervised Learning: Linear regression, logistic regression
 
 - [**linear regression**](./linear-reg.md)
 
@@ -15,8 +15,6 @@ we read about [Generalized Linear Models](./generalized-linear-model.md)
 
 [unsupervised](unsupervised.md)
 
-[reinforcement](reinforcement.md)
-
 ---
 
 [Basic ML and Data Cleaning](./chap-1-2.md)
@@ -24,3 +22,7 @@ we read about [Generalized Linear Models](./generalized-linear-model.md)
 [Training Models](./chap-4.md)
 [Support Vector Machine](./chap-5.md)
 [Decision Tree](./chap-6.md)
+
+---
+
+chap 10 and deep-learning.md can be done simultaneously
