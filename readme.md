@@ -23,6 +23,7 @@ we read about [Generalized Linear Models](./generalized-linear-model.md)
 [Support Vector Machine](./chap-5.md)
 [Decision Tree](./chap-6.md)
 [Ensemble Learning](./chap-7.md)
+[Dimension Reduction](./chap-8.md)
 
 ---
 
