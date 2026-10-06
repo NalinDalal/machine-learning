@@ -1,5 +1,6 @@
 # TenserFlow
-open source software library for numerical computation, and fine tuned for large scale machine learning
+
+It is an open source software library for numerical computation, and fine tuned for large scale machine learning.
 
 1st define in Python a graph of computations to perform
 2nd TensorFlow takes that graph and runs it efficiently using optimized C++ code
@@ -20,12 +21,12 @@ graph TD
   C --> I[2]
 ```
 
-also supports distributed computing, so you can train colossal neural networks on
-humongous training sets in a reasonable amount of time by splitting the computations across hundreds of servers
+TF also supports distributed computing; so you can train colossal neural networks on
+humongous training sets in a reasonable amount of time by splitting the computations across hundreds of servers.
 
 we can train a network with millions of parameters on a training set composed of billions of instances with millions of features each.
 
-designed to be flexible, scalable, and production-ready, and existing frameworks arguably hit only two out of the three of these.
+It is designed to be flexible, scalable, and production-ready, and existing frameworks arguably hit only two out of the three of these.
 
 - runs on every device
 - simple flexible python API [TF.Learn](tensorflow.contrib.learn) compatible with scikit
@@ -34,12 +35,14 @@ designed to be flexible, scalable, and production-ready, and existing frameworks
 - TensorBoard: visualisation tool to browse through the computation graph, view learning curves, and more.
 
 ## Installation
+
 ```sh
 source env/bin/activate
 pip3 install --upgrade tensorflow
 ```
 
 ## [1st Graph](./tf-graph.py)
+
 ```python
 import tensorflow as tf
 x = tf.Variable(3, name="x")
@@ -68,31 +71,34 @@ with tf.Session() as sess:
 ```
 
 tensor flow program has 2 parts:
+
 - 1st: build a computation graph(construction phase)
 - 2nd: run it(execution phase)
 
 ## Managing Graphs
-can create a graph directly and add nodes:
+
+TF can create a graph directly and add nodes:
+
 ```python
 x1 = tf.Variable(1)
 x1.graph is tf.get_default_graph()  #true
 ```
 
 multiple graphs:
+
 ```python
 graph = tf.Graph()
 
 # creating a new Graph and temporarily making it the default graph inside a with block
 with graph.as_default():
-... x2 = tf.Variable(2)
-...
-
+    x2 = tf.Variable(2)
 
 x2.graph is graph   #True
 >>> x2.graph is tf.get_default_graph()  #False
 ```
 
 ## Lifecycle of a Node Value
+
 ```python
 w = tf.constant(3)
 x = w + 2
@@ -104,11 +110,12 @@ with tf.Session() as sess:
     print(z.eval()) # 15
 ```
 
-start a grph, y depends on w, that on x
+start a graph, y depends on x, and x on w
 so evaluate w, then x, then y, return y, then return z
 preceding code evaluates w and x twice
 
 to avoid twice evaluation:
+
 ```python
 with tf.Session() as sess:
     y_val, z_val = sess.run([y, z])
@@ -118,15 +125,16 @@ with tf.Session() as sess:
 
 ## [Linear Regression with TensorFlow](./tf-reg.py)
 
-- 1. TensorFlow ops take any number of inputs and produce outputs; constants/variables are source ops (no inputs).
-- 2. Inputs/outputs are tensors (multidimensional arrays) with a dtype and shape (represented as NumPy ndarrays in the Python API).
-- 3. Building the graph only creates nodes (no computation); matrix ops like `transpose`, `matmul`, `matrix_inverse` define nodes.
-- 4. To execute computations you run the graph in a `Session`; sessions evaluate tensors and return concrete NumPy arrays.
-- 5. Example: implement the Normal Equation with TensorFlow constants and matrix ops, then evaluate `theta` in a session.
+1.  TensorFlow ops take any number of inputs and produce outputs; constants/variables are source ops (no inputs).
+2.  Inputs/outputs are tensors (multidimensional arrays) with a dtype and shape (represented as NumPy ndarrays in the Python API).
+3.  Building the graph only creates nodes (no computation); matrix ops like `transpose`, `matmul`, `matrix_inverse` define nodes.
+4.  To execute computations you run the graph in a `Session`; sessions evaluate tensors and return concrete NumPy arrays.
+5.  Example: implement the Normal Equation with TensorFlow constants and matrix ops, then evaluate `theta` in a session.
 
 ```python
 import numpy as np
 from sklearn.datasets import fetch_california_housing
+import tensorflow as tf
 
 housing = fetch_california_housing()
 m, n = housing.data.shape
@@ -144,6 +152,7 @@ with tf.Session() as sess:
 ## [Implementing Gradient Descent](./tf-gra-des.py)
 
 ### Manual
+
 ```python
 n_epochs = 1000
 learning_rate = 0.01
@@ -173,6 +182,7 @@ best_theta = theta.eval()
 ```
 
 ### Using AutoDiff
+
 well optimise algos, like f(x)=exp(exp(exp(x))) and f'(x)=exp(x) × exp(exp(x)) × exp(exp(exp(x)))
 if you code them separately, not efficient
 efficient: write a function that first computes exp(x), then exp(exp(x)), then exp(exp(exp(x))), and returns all three.
@@ -186,6 +196,7 @@ def my_func(a, b):
 ```
 
 ### Using Optimiser
+
 ```python
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
 training_op = optimizer.minimize(mse)
@@ -195,8 +206,10 @@ optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.9
 ```
 
 ## Feeding Data to Training Algorithm
+
 use placeholder nodes to just output the data you tell them to output at runtime
 used to pass the training data to TensorFlow during training.
+
 ```python
 >>> A = tf.placeholder(tf.float32, shape=(None, 3))
 >>> B = A + 5
@@ -215,7 +228,8 @@ used to pass the training data to TensorFlow during training.
 
 ## Saving & Restoring Models
 
-just save a model to reuse it later
+We save a model to reuse it later:
+
 ```python
 [...]
 theta = tf.Variable(tf.random_uniform([n + 1, 1], -1.0, 1.0), name="theta")
@@ -241,7 +255,9 @@ saver.restore(sess, "/tmp/my_model_final.ckpt")
 ```
 
 ## Visualizing the Graph and Training Curves Using TensorBoard
+
 use TensorBoard to show interactive visualisation
+
 ```python
 from datetime import datetime
 now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
@@ -264,6 +280,7 @@ file_writer.close()
 ```
 
 to run:
+
 ```bash
 source env/bin/activate
 tensorboard --logdir tf_logs/
@@ -272,7 +289,9 @@ tensorboard --logdir tf_logs/
 runs at `http://0.0.0.0:6006/`
 
 ## Name Scopes
+
 just name the group of nodes for future ref
+
 ```python
 with tf.name_scope("loss") as scope:
     error = y_pred - y
@@ -283,8 +302,6 @@ with tf.name_scope("loss") as scope:
 
 create a graph that adds the output of two rectified linear units
 ReLU: linear function of the inputs, and outputs the result if it is positive, and 0 otherwise
-
-
 
 ```python
 n_features = 3
@@ -301,6 +318,7 @@ output = tf.add(relu1, relu2, name="output")
 ```
 
 optimise to:
+
 ```python
 def relu(X):
     w_shape = (int(X.get_shape()[1]), 1)
@@ -314,6 +332,3 @@ X = tf.placeholder(tf.float32, shape=(None, n_features), name="X")
 relus = [relu(X) for i in range(5)]
 output = tf.add_n(relus, name="output")
 ```
-
-
-u can also share variables

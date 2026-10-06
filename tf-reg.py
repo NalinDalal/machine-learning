@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.datasets import fetch_california_housing
+import tensorflow as tf
 
 housing = fetch_california_housing()
 m, n = housing.data.shape

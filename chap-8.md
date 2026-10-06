@@ -211,5 +211,4 @@ lle = LocallyLinearEmbedding(n_components=2, n_neighbors=10)
 X_reduced = lle.fit_transform(X)
 ```
 
-Distances are not preserved on a larger scale:
-the left part of the unrolled Swiss roll is squeezed, while the right part is stretched.
+Distances are not preserved on a larger scale: the left part of the unrolled Swiss roll is squeezed, while the right part is stretched.
