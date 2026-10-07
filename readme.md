@@ -1,7 +1,5 @@
 # Machine Learning
 
-[Deep Learning](./deep-learning.md)
-
 [Generalisation & Regularisation](./gnrl-reg.md)
 
 [unsupervised](unsupervised.md)
@@ -17,9 +15,7 @@
 [Decision Tree](./chap-6.md)
 [Ensemble Learning](./chap-7.md)
 [Dimension Reduction](./chap-8.md)
+[tensorflow](./chap-9.md)
+[Neural Network/Deep Learning](./chap-10.md)
 
-move to chap 9/tensorflow
-
----
-
-chap 10 and deep-learning.md can be done simultaneously
+move to chap 11
