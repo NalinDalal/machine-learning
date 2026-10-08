@@ -2,17 +2,18 @@
 
 ## where it starts
 
-brain neurons inspired ANNs(artificial neural networks)
+Human Brain neurons inspired ANNs(artificial neural networks)
 
 So McCulloch and Pitts presented a simplified computational model
 of how biological neurons might work together in animal brains to perform complex
 computations using propositional logic.
 1st ANN
 
-biological neurons are connected to each other, they help to transfer data
+Biological neurons are connected to each other, they help to transfer data->
 
 hence the paper said an artificial neuron has one or more binary (on/off) inputs and one binary output
-n input active=> output activates
+
+n input active => 1 output activates
 example: simple logical computations
 
 ```mermaid
@@ -37,11 +38,12 @@ graph BT
     end
 ```
 
-cute, but binary on/off is useless for real data. so we relax the rules.
+Cute, right? but binary on/off is useless for real data.
+Sol: we relax the rules.
 
 ## [Perceptrons (1957 by Frank Rosenblatt)](./perceptron.py)
 
-linear threshold unit (LTU): the inputs and output are now numbers
+_Linear Threshold Unit_ (LTU): the inputs and output are now numbers
 (z = w1 x1 + w2 x2 + ⋯ + wn xn = wT· x)
 applies a step function to that sum and outputs the result
 hw(x) = step (z) = step (wT·x).
@@ -49,10 +51,10 @@ hw(x) = step (z) = step (wT·x).
 Perceptrons: Single Layer of LTUs, each neuron connected to all inputs
 add an extra bias feature(x0=1); represented using a special type of neuron called a bias neuron,
 
-**training:**
+**Training:**
 
-when 1 neuron triggers another neuron, their connection strengthens
-known as **Hebbs Rule**: the connection weight between two neurons is increased whenever they have the same output.
+When 1 neuron triggers another neuron, their connection strengthens
+This is known as **Hebbs Rule**: the connection weight between two neurons is increased whenever they have the same output.
 
 but Hebb alone drifts. the actual rule subtracts the target from the prediction:
 
@@ -81,22 +83,22 @@ per_clf.fit(X, y)
 y_pred = per_clf.predict([[2, 0.5]])
 ```
 
-**weakness:**
+**Weakness:**
 
 - can't solve XOR
 
-a single layer draws one straight line. XOR needs two. no amount of extra LTUs fixes it — that's a hard limit of the model, not a tuning problem.
+a single layer draws one straight line. XOR needs two. no amount of extra LTUs fixes it : that's a hard limit of the model.
 
-solve by stacking multiple perceptrons to one-another
+solution: stack multiple perceptrons to one-another
 resulting ANN is called a Multi-Layer Perceptron (MLP).
 
 ## MultiLayer Perceptron & BackPropagation
 
 so there are 1 input layer, then multiple hidden layers
-atlast has an output layer
+at last has an output layer
 Every layer except the output layer includes a bias neuron and is fully connected to the next layer
 
-deep neural network (DNN): ANN has two or more hidden layers
+deep neural network (DNN): ANN which has two or more hidden layers
 
 **algorithm:**
 
